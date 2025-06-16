@@ -26,7 +26,6 @@ class BookController {
         }
     }
 
-    // Adicione outros métodos CRUD para livros aqui (create, update, delete)
 }
 
 module.exports = BookController;

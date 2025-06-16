@@ -25,7 +25,7 @@ class UserController {
             res.status(500).json({ error: 'Erro interno do servidor.' });
         }
     }
-    // Adicione outros métodos CRUD para usuários aqui
+
 }
 
 module.exports = UserController;

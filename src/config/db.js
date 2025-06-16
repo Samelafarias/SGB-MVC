@@ -1,5 +1,3 @@
-// src/config/db.js
-
 const mysql = require('mysql2/promise');
 
 const dbConfig = {
@@ -9,29 +7,24 @@ const dbConfig = {
     database: 'biblioteca_db' 
 };
 
-let connection; // Variável para armazenar a conexão única
+let connection; 
 
 async function connectDB() {
     try {
-        // Se a conexão não existe ou foi desconectada, cria uma nova
-        // 'undefined' é um estado válido para 'connection' se nunca foi atribuída.
-        // O estado 'disconnected' não é exposto diretamente pelo mysql2/promise como um atributo 'state',
-        // mas a verificação `!connection` cobre o caso inicial.
-        // Para reconexões robustas, pode-se adicionar lógica de retry ou verificar o status do pool.
         if (!connection) {
             connection = await mysql.createConnection(dbConfig);
             console.log('Conectado ao banco de dados MySQL/MariaDB!');
-            await createTables(connection); // Passa a conexão para createTables
+            await createTables(connection); 
         }
         return connection;
     } catch (error) {
         console.error('Erro ao conectar ao banco de dados:', error.message);
-        process.exit(1); // Sai do processo se a conexão inicial falhar
+        process.exit(1); 
     }
 }
 
 async function createTables(conn) {
-    // Tabela: livros
+
     await conn.execute(`
         CREATE TABLE IF NOT EXISTS livros (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -43,7 +36,7 @@ async function createTables(conn) {
             quantidade_disponivel INT NOT NULL DEFAULT 0
         );
     `);
-    // Tabela: usuarios
+
     await conn.execute(`
         CREATE TABLE IF NOT EXISTS usuarios (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -52,7 +45,7 @@ async function createTables(conn) {
             curso VARCHAR(255) NOT NULL
         );
     `);
-    // Tabela: emprestimos
+
     await conn.execute(`
         CREATE TABLE IF NOT EXISTS emprestimos (
             id INT AUTO_INCREMENT PRIMARY KEY,

@@ -32,17 +32,17 @@ class LoanController {
 
             const today = new Date();
             const dueDate = new Date();
-            dueDate.setDate(today.getDate() + 7); // 7 dias após o empréstimo
+            dueDate.setDate(today.getDate() + 7); 
 
             const loanData = {
                 usuario_matricula: matricula,
                 livro_isbn: isbn,
-                data_emprestimo: today.toISOString().slice(0, 10), // 'YYYY-MM-DD'
+                data_emprestimo: today.toISOString().slice(0, 10), 
                 data_prevista_devolucao: dueDate.toISOString().slice(0, 10)
             };
 
             const loanId = await Loan.create(loanData);
-            await Book.updateAvailableQuantity(isbn, -1); // Decrementa a quantidade disponível
+            await Book.updateAvailableQuantity(isbn, -1); 
 
             res.status(201).json({ message: 'Empréstimo registrado com sucesso!', loanId });
 
@@ -78,7 +78,7 @@ class LoanController {
             }
 
             await Loan.updateReturn(loanId, today.toISOString().slice(0, 10), status);
-            await Book.updateAvailableQuantity(loan.livro_isbn, 1); // Incrementa a quantidade disponível
+            await Book.updateAvailableQuantity(loan.livro_isbn, 1); 
 
             res.status(200).json({ message: 'Devolução registrada com sucesso!', status });
 
